@@ -12,3 +12,4 @@
   SEO: metadata, OG image, sitemap, robots. Design: taste-skill inspector 0 FAIL
   at 1440/768/390.
 - Live on Vercel: https://demo-dental-teal-two.vercel.app (site.url updated for canonical/OG/sitemap).
+- Hero paints without an entrance animation (it is the LCP); Lighthouse mobile was 88 performance.
