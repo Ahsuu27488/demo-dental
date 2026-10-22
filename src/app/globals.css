@@ -26,6 +26,7 @@
   --step-display: clamp(3.4rem, 8vw, 8.5rem);
   --margin:       clamp(16px, 4vw, 56px);
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {

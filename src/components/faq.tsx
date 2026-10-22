@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { faq } from "@/content/clinic";
+import SplitHeading from "./split-heading";
+import Reveal from "./reveal";
 
 const cardColors = ["lichen", "rain", "moss"] as const;
 
@@ -13,10 +15,12 @@ export default function Faq() {
   return (
     <section id="faq" className="section-gap" aria-labelledby="faq-heading">
       <div className="page-container">
-        <div className="faq-wrap">
-          <h2 id="faq-heading" className="display-head step-head">
-            {faq.heading}
-          </h2>
+        <Reveal className="faq-wrap">
+          <SplitHeading
+            id="faq-heading"
+            text={faq.heading}
+            className="display-head step-head"
+          />
           <div className="faq-stack">
             {faq.items.map((item, i) => {
               const isOpen = openIndex === i;
@@ -37,7 +41,8 @@ export default function Faq() {
                       aria-controls={`faq-panel-${i}`}
                       onClick={() => setOpenIndex(isOpen ? -1 : i)}
                     >
-                      {item.q}
+                      <span className="faq-q-text">{item.q}</span>
+                      <span className="leaf-dot faq-toggle" aria-hidden="true" />
                     </button>
                   </h3>
                   <div
@@ -52,7 +57,7 @@ export default function Faq() {
               );
             })}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

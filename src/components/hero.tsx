@@ -19,26 +19,31 @@ export default function Hero() {
             <h1 className="display-head hero-title">{hero.headline}</h1>
             <p className="hero-sub">{hero.sub}</p>
           </div>
-          <div className="hero-photo leaf-xl">
+          <div className="hero-photo leaf-xl" data-tilt="4">
             <Image
               src={photo.src}
               alt={photo.alt}
               fill
               priority
               sizes="(min-width: 768px) 38vw, 100vw"
-              className="hero-drift object-cover"
+              data-parallax="-0.05"
+              data-parallax-room="0.035"
+              className="object-cover"
             />
           </div>
         </div>
 
-        <nav aria-label="Sections" className="folder-stack">
+        <nav aria-label="Sections" className="folder-stack" data-scrub>
           {hero.folders.map((folder, i) => {
             const isFront = i === hero.folders.length - 1;
             return (
               <div
                 key={folder.id}
                 className={`folder folder-${folderColors[i]}${isFront ? " folder-front" : ""}`}
-                style={{ zIndex: i + 1 }}
+                style={{
+                  zIndex: i + 1,
+                  ["--i" as string]: i,
+                }}
               >
                 <a
                   href={`#${folder.id}`}
@@ -49,7 +54,7 @@ export default function Hero() {
                 </a>
                 {isFront && (
                   <div className="folder-front-body">
-                    <a href="#book" className="btn-leaf btn-light">
+                    <a href="#book" className="btn-leaf btn-light" data-magnetic>
                       {hero.cta}
                     </a>
                     <a href={contact.phoneHref} className="folder-call">

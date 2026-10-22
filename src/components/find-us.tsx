@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { hours, contact, photos } from "@/content/clinic";
 import Reveal from "./reveal";
+import SplitHeading from "./split-heading";
 
 export default function FindUs() {
   const band = photos["cloud-hills"];
@@ -18,91 +19,88 @@ export default function FindUs() {
             className="findus-grid"
           >
             {/* Left column */}
-            <div className="reveal-item">
-              <h2
+            <div>
+              <SplitHeading
                 id="find-us-heading"
-                className="display-head"
-                style={{
-                  fontSize: "var(--step-head)",
-                  color: "var(--ink)",
-                }}
-              >
-                {hours.heading}
-              </h2>
+                text={hours.heading}
+                className="display-head step-head"
+              />
 
-              <table
-                style={{
-                  width: "100%",
-                  maxWidth: "420px",
-                  marginTop: "24px",
-                  borderCollapse: "collapse",
-                  fontSize: "var(--step-body)",
-                }}
-              >
-                <tbody>
-                  {hours.rows.map((row, i) => (
-                    <tr
-                      key={row.day}
-                      style={{
-                        background:
-                          i % 2 === 0 ? "var(--surface)" : "transparent",
-                      }}
-                    >
-                      <td
-                        style={{
-                          padding: "10px 16px",
-                          fontWeight: 500,
-                        }}
-                      >
-                        {row.day}
-                      </td>
-                      <td
-                        style={{
-                          padding: "10px 16px",
-                          textAlign: "right",
-                        }}
-                      >
-                        {row.time}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <p
-                style={{
-                  marginTop: "24px",
-                  fontSize: "var(--step-body)",
-                  color: "var(--ink)",
-                }}
-              >
-                {hours.emergency}
-              </p>
-
-              <div style={{ marginTop: "24px" }}>
-                <p style={{ fontSize: "var(--step-body)" }}>{contact.area}</p>
-                <p
+              <div className="reveal-item reveal-delay-1">
+                <table
                   style={{
-                    fontSize: "var(--step-small)",
-                    color: "var(--muted)",
-                    marginTop: "4px",
+                    width: "100%",
+                    maxWidth: "420px",
+                    marginTop: "24px",
+                    borderCollapse: "collapse",
+                    fontSize: "var(--step-body)",
                   }}
                 >
-                  {contact.addressNote}
+                  <tbody>
+                    {hours.rows.map((row, i) => (
+                      <tr
+                        key={row.day}
+                        style={{
+                          background:
+                            i % 2 === 0 ? "var(--surface)" : "transparent",
+                        }}
+                      >
+                        <td
+                          style={{
+                            padding: "10px 16px",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {row.day}
+                        </td>
+                        <td
+                          style={{
+                            padding: "10px 16px",
+                            textAlign: "right",
+                          }}
+                        >
+                          {row.time}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <p
+                  style={{
+                    marginTop: "24px",
+                    fontSize: "var(--step-body)",
+                    color: "var(--ink)",
+                  }}
+                >
+                  {hours.emergency}
                 </p>
-                <p style={{ marginTop: "12px" }}>
-                  <a href={contact.phoneHref} style={{ color: "var(--ink)" }}>
-                    {contact.phoneDisplay}
-                  </a>
-                </p>
-                <p style={{ marginTop: "4px" }}>
-                  <a
-                    href={`mailto:${contact.email}`}
-                    style={{ color: "var(--ink)" }}
+
+                <div style={{ marginTop: "24px" }}>
+                  <p style={{ fontSize: "var(--step-body)" }}>{contact.area}</p>
+                  <p
+                    style={{
+                      fontSize: "var(--step-small)",
+                      color: "var(--muted)",
+                      marginTop: "4px",
+                    }}
                   >
-                    {contact.email}
-                  </a>
-                </p>
+                    {contact.addressNote}
+                  </p>
+                  <p style={{ marginTop: "12px" }}>
+                    <a href={contact.phoneHref} style={{ color: "var(--ink)" }}>
+                      {contact.phoneDisplay}
+                    </a>
+                  </p>
+                  <p style={{ marginTop: "4px" }}>
+                    <a
+                      href={`mailto:${contact.email}`}
+                      style={{ color: "var(--ink)" }}
+                    >
+                      {contact.email}
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -147,22 +145,14 @@ export default function FindUs() {
           </div>
 
           {/* City park photo band */}
-          <div
-            className="reveal-item reveal-delay-2"
-            style={{
-              marginTop: "clamp(48px, 6vw, 80px)",
-              position: "relative",
-              width: "100%",
-              aspectRatio: "21 / 9",
-              borderRadius: "var(--leaf-xl) 0",
-              overflow: "hidden",
-            }}
-          >
+          <div className="findus-photo-band reveal-item reveal-delay-2">
             <Image
               src={band.src}
               alt={band.alt}
               fill
               sizes="100vw"
+              data-parallax="-0.04"
+              data-parallax-room="0.045"
               className="object-cover"
             />
           </div>

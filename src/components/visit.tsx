@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { photos, visit as visitData } from "@/content/clinic";
 import Reveal from "./reveal";
+import SplitHeading from "./split-heading";
 
 // Seeded pseudo-random numbers (Mulberry32) so server and client draw the same leaves.
 function mulberry32(seed: number) {
@@ -13,7 +14,14 @@ function mulberry32(seed: number) {
   };
 }
 
-type Leaf = { x: number; y: number; tone: 0 | 1 | 2 };
+type Leaf = {
+  x: number;
+  y: number;
+  tone: 0 | 1 | 2;
+  dx: number;
+  dy: number;
+  dr: number;
+};
 
 // Leaves drawn in a "long × short" box: along = the reading direction
 // (left→right on desktop, top→bottom on phones), across = the other axis.
@@ -27,6 +35,9 @@ function layout(along: number, across: number, size: number): Leaf[] {
       x: rng() * (third - size * 2) + size * 0.5,
       y: rng() * (across - size * 2) + size * 0.5,
       tone: rng() > 0.5 ? 0 : 1,
+      dx: Math.round((rng() * 2 - 1) * 60),
+      dy: Math.round((rng() * 2 - 1) * 60),
+      dr: Math.round((rng() * 2 - 1) * 40),
     });
   }
   // Look: pulled into a tight ribbon three leaves high.
@@ -38,6 +49,9 @@ function layout(along: number, across: number, size: number): Leaf[] {
         x: third + size * 0.5 + i * ((third - size * 2) / (perRow - 1)) + (rng() - 0.5) * size * 0.3,
         y: ribbonTop + row * size * 1.25,
         tone: 1,
+        dx: Math.round((rng() * 2 - 1) * 60),
+        dy: Math.round((rng() * 2 - 1) * 60),
+        dr: Math.round((rng() * 2 - 1) * 40),
       });
     }
   }
@@ -48,7 +62,14 @@ function layout(along: number, across: number, size: number): Leaf[] {
   const gapY = (across - size * 2) / (rows - 1);
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      leaves.push({ x: third * 2 + size + c * gapX, y: size * 0.5 + r * gapY, tone: 2 });
+      leaves.push({
+        x: third * 2 + size + c * gapX,
+        y: size * 0.5 + r * gapY,
+        tone: 2,
+        dx: Math.round((rng() * 2 - 1) * 60),
+        dy: Math.round((rng() * 2 - 1) * 60),
+        dr: Math.round((rng() * 2 - 1) * 40),
+      });
     }
   }
   return leaves;
@@ -72,9 +93,11 @@ export default function Visit() {
       <div className="page-container">
         <Reveal className="visit-grid">
           <div className="visit-head">
-            <h2 id="visit-heading" className="display-head step-head reveal-item">
-              {visitData.heading}
-            </h2>
+            <SplitHeading
+              id="visit-heading"
+              text={visitData.heading}
+              className="display-head step-head"
+            />
             <p className="visit-intro reveal-item reveal-delay-1">{visitData.intro}</p>
           </div>
           <div className="visit-photo leaf-xl reveal-item reveal-delay-2">
@@ -87,15 +110,43 @@ export default function Visit() {
             />
           </div>
 
-          <div className="visit-diagram reveal-item reveal-delay-2" aria-hidden="true">
+          <div className="visit-diagram reveal-item reveal-delay-2" data-scrub aria-hidden="true">
             <svg viewBox="0 0 900 200" className="visit-svg-wide">
               {wide.map((l, i) => (
-                <path key={i} d={leaf} transform={`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)})`} fill={fills[l.tone]} />
+                <g
+                  key={i}
+                  className="leaf"
+                  style={{
+                    ["--dx" as string]: l.dx,
+                    ["--dy" as string]: l.dy,
+                    ["--dr" as string]: l.dr,
+                  }}
+                >
+                  <path
+                    d={leaf}
+                    transform={`translate(${l.x.toFixed(1)} ${l.y.toFixed(1)})`}
+                    fill={fills[l.tone]}
+                  />
+                </g>
               ))}
             </svg>
             <svg viewBox="0 0 300 420" className="visit-svg-tall">
               {tall.map((l, i) => (
-                <path key={i} d={leaf} transform={`translate(${l.y.toFixed(1)} ${l.x.toFixed(1)})`} fill={fills[l.tone]} />
+                <g
+                  key={i}
+                  className="leaf"
+                  style={{
+                    ["--dx" as string]: l.dx,
+                    ["--dy" as string]: l.dy,
+                    ["--dr" as string]: l.dr,
+                  }}
+                >
+                  <path
+                    d={leaf}
+                    transform={`translate(${l.y.toFixed(1)} ${l.x.toFixed(1)})`}
+                    fill={fills[l.tone]}
+                  />
+                </g>
               ))}
             </svg>
           </div>

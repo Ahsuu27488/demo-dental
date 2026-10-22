@@ -9,7 +9,7 @@ import { useEffect } from "react";
 //
 //   data-tilt="4"         3D tilt towards the pointer, max N degrees (fine pointers only)
 //   data-magnetic         pulled up to 6px towards a nearby pointer (fine pointers only)
-//   data-parallax="-0.05" scroll parallax, clamped to ±40px
+//   data-parallax="-0.05" scroll parallax, clamped to the picture's spare edge (data-parallax-room) and ±40px
 //   data-scrub            sets --p (0..1): progress of the element through the viewport
 //
 // Nothing runs under prefers-reduced-motion; CSS then shows every final state.
@@ -109,7 +109,10 @@ export default function Motion() {
         if (!visible.has(el)) continue;
         const r = el.getBoundingClientRect();
         const offset = (r.top + r.height / 2 - vh / 2) * (Number(el.dataset.parallax) || 0);
-        const y = Math.max(-40, Math.min(40, offset));
+        // Never travel further than the picture's spare edge (data-parallax-room =
+        // fraction of its height hidden on each side by its CSS scale), max 40px.
+        const room = Math.min(40, r.height * (Number(el.dataset.parallaxRoom) || 0.04));
+        const y = Math.max(-room, Math.min(room, offset));
         el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
       }
       for (const el of scrubs) {

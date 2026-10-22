@@ -17,21 +17,23 @@ function FernFrond() {
     return { x, w, h, r: w * 0.85 };
   });
   return (
-    <svg viewBox="0 0 1200 300" className="frond" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-      <rect x="0" y={stemY - 3} width="1176" height="6" fill="var(--field-moss)" />
-      {leaflets.map((l, i) => (
-        <g key={i}>
-          <path
-            d={leaf(l.x, stemY - 7 - l.h, l.w, l.h, l.r)}
-            fill={i % 2 ? "var(--accent)" : "var(--field-moss)"}
-          />
-          <path
-            d={leaf(l.x + 22, stemY + 7, l.w, l.h, l.r)}
-            fill={i % 2 ? "var(--field-moss)" : "var(--accent)"}
-          />
-        </g>
-      ))}
-    </svg>
+    <div data-scrub>
+      <svg viewBox="0 0 1200 300" className="frond" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <rect x="0" y={stemY - 3} width="1176" height="6" fill="var(--field-moss)" />
+        {leaflets.map((l, i) => (
+          <g key={i} className="frond-pair" style={{ ["--i" as string]: i }}>
+            <path
+              d={leaf(l.x, stemY - 7 - l.h, l.w, l.h, l.r)}
+              fill={i % 2 ? "var(--accent)" : "var(--field-moss)"}
+            />
+            <path
+              d={leaf(l.x + 22, stemY + 7, l.w, l.h, l.r)}
+              fill={i % 2 ? "var(--field-moss)" : "var(--accent)"}
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
   );
 }
 

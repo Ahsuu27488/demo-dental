@@ -49,3 +49,7 @@ Runs Vitest unit tests for the booking validation library (`src/lib/booking.ts`)
 ## Credits
 
 Photos by Paul Jarvis, Buzo Jesús, Liane Metzler, Kim Daniel and Forrest Cavale on [Unsplash](https://unsplash.com/license). Map © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright).
+
+Motion techniques were studied on 21st.dev and rebuilt in our own code; see `docs/21st-study.md`. Adapted ideas from MIT-licensed spell-ui (TiltCard) and motion-primitives (Magnetic, TextEffect); no component was copied whole.
+
+The reviews section shows sample quotes written for this demo; the clinic and the patients are fictional.

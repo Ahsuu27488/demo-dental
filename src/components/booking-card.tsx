@@ -12,6 +12,8 @@ import {
   formatDay,
 } from "@/lib/booking";
 import type { BookingErrors } from "@/lib/booking";
+import SplitHeading from "./split-heading";
+import Reveal from "./reveal";
 
 const fmt = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -84,434 +86,438 @@ export default function BookingCard() {
   return (
     <section id="book" className="section-gap" aria-labelledby="book-heading">
       <div className="page-container">
-        {/* Card */}
-        <div
-          className="leaf-xl"
-          style={{
-            background: "var(--field-moss)",
-            color: "var(--field-moss-ink)",
-            maxWidth: "calc(10 / 12 * 100%)",
-            marginInline: "auto",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
+        <Reveal>
+          {/* Card */}
           <div
+            className="leaf-xl"
+            data-tilt="2"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              minHeight: "clamp(360px, 30vw, 480px)",
+              background: "var(--field-moss)",
+              color: "var(--field-moss-ink)",
+              maxWidth: "calc(10 / 12 * 100%)",
+              marginInline: "auto",
+              position: "relative",
+              overflow: "hidden",
             }}
-            className="booking-card-layout"
           >
-            {/* LEFT STUB */}
             <div
               style={{
-                flex: "0 0 42%",
-                padding: "clamp(24px, 3vw, 40px)",
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                flexDirection: "row",
+                minHeight: "clamp(360px, 30vw, 480px)",
               }}
-              className="booking-left"
+              className="booking-card-layout"
             >
-              <h2
-                id="book-heading"
-                className="display-head"
-                style={{ fontSize: "var(--step-head)", maxWidth: "12ch" }}
-              >
-                {booking.heading}
-              </h2>
-              <p style={{ marginTop: "12px", fontSize: "var(--step-body)" }}>
-                {booking.sub}
-              </p>
-
-              {/* Live summary */}
+              {/* LEFT STUB */}
               <div
                 style={{
-                  marginTop: "24px",
-                  fontSize: "var(--step-body)",
+                  flex: "0 0 42%",
+                  padding: "clamp(24px, 3vw, 40px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
+                className="booking-left"
               >
-                {estimate && (
-                  <>
-                    <p style={{ fontWeight: 700 }}>{estimate.name}</p>
-                    <p>About {estimate.minutes} minutes</p>
-                    <p>
-                      {estimate.from === 0 ? "Free" : `From ${fmt.format(estimate.from)}`}
-                    </p>
-                  </>
-                )}
-                <p style={{ marginTop: "8px" }}>
-                  {day ? formatDay(day) : "Pick a day"}
+                <SplitHeading
+                  id="book-heading"
+                  text={booking.heading}
+                  className="display-head step-head booking-title"
+                />
+                <p style={{ marginTop: "12px", fontSize: "var(--step-body)" }}>
+                  {booking.sub}
+                </p>
+
+                {/* Live summary */}
+                <div
+                  style={{
+                    marginTop: "24px",
+                    fontSize: "var(--step-body)",
+                  }}
+                >
+                  {estimate && (
+                    <div key={serviceId} className="summary-line-enter">
+                      <p style={{ fontWeight: 700 }}>{estimate.name}</p>
+                      <p>About {estimate.minutes} minutes</p>
+                      <p>
+                        {estimate.from === 0 ? "Free" : `From ${fmt.format(estimate.from)}`}
+                      </p>
+                    </div>
+                  )}
+                  <p key={day || "none"} className="summary-line-enter" style={{ marginTop: "8px" }}>
+                    {day ? formatDay(day) : "Pick a day"}
+                  </p>
+                </div>
+
+                <p
+                  style={{
+                    marginTop: "auto",
+                    paddingTop: "24px",
+                    fontSize: "var(--step-small)",
+                  }}
+                >
+                  {booking.demoNotice}
                 </p>
               </div>
 
-              <p
+              {/* PERFORATION */}
+              <div
                 style={{
-                  marginTop: "auto",
-                  paddingTop: "24px",
-                  fontSize: "var(--step-small)",
+                  position: "relative",
+                  width: 0,
+                  flexShrink: 0,
                 }}
+                className="perforation-vertical"
+                aria-hidden="true"
               >
-                {booking.demoNotice}
-              </p>
-            </div>
+                {/* Top notch */}
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-14px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "50%",
+                    background: "var(--bg)",
+                  }}
+                />
+                {/* Dots */}
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "28px",
+                    bottom: "28px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  {Array.from({ length: 24 }).map((_, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "var(--bg)",
+                      }}
+                    />
+                  ))}
+                </span>
+                {/* Bottom notch */}
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-14px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "28px",
+                    height: "28px",
+                    borderRadius: "50%",
+                    background: "var(--bg)",
+                  }}
+                />
+              </div>
 
-            {/* PERFORATION */}
-            <div
-              style={{
-                position: "relative",
-                width: 0,
-                flexShrink: 0,
-              }}
-              className="perforation-vertical"
-              aria-hidden="true"
-            >
-              {/* Top notch */}
-              <span
+              {/* RIGHT SIDE: form or success */}
+              <div
                 style={{
-                  position: "absolute",
-                  top: "-14px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  background: "var(--bg)",
-                }}
-              />
-              {/* Dots */}
-              <span
-                style={{
-                  position: "absolute",
-                  top: "28px",
-                  bottom: "28px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
+                  flex: 1,
+                  padding: "clamp(24px, 3vw, 40px)",
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                 }}
+                className="booking-right"
               >
-                {Array.from({ length: 24 }).map((_, i) => (
-                  <span
-                    key={i}
-                    style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      background: "var(--bg)",
-                    }}
-                  />
-                ))}
-              </span>
-              {/* Bottom notch */}
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: "-14px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "50%",
-                  background: "var(--bg)",
-                }}
-              />
-            </div>
-
-            {/* RIGHT SIDE: form or success */}
-            <div
-              style={{
-                flex: 1,
-                padding: "clamp(24px, 3vw, 40px)",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-              className="booking-right"
-            >
-              {submitted ? (
-                <div>
-                  <h3
-                    ref={successRef}
-                    tabIndex={-1}
-                    className="display-head"
-                    style={{
-                      fontSize: "var(--step-head)",
-                    }}
-                  >
-                    {booking.success.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: "var(--step-body)",
-                      marginTop: "16px",
-                      maxWidth: "50ch",
-                    }}
-                  >
-                    {booking.success.text}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="btn-leaf"
-                    style={{
-                      background: "var(--ink)",
-                      color: "var(--bg)",
-                      marginTop: "24px",
-                    }}
-                  >
-                    {booking.success.again}
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} noValidate>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "12px",
-                    }}
-                  >
-                    {/* Name */}
-                    <div>
-                      <label htmlFor="book-name" className="sr-only">
-                        {booking.fields.name}
-                      </label>
-                      <input
-                        ref={nameRef}
-                        id="book-name"
-                        type="text"
-                        placeholder={booking.fields.name}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        aria-invalid={!!errors.name}
-                        aria-describedby={errors.name ? "err-name" : undefined}
-                        style={{
-                          width: "100%",
-                          height: "54px",
-                          padding: "0 16px",
-                          fontSize: "16px",
-                          background: fieldBg,
-                          color: "var(--ink)",
-                          border: "none",
-                          borderRadius: "var(--leaf-s) 0",
-                        }}
-                      />
-                      {errors.name && (
-                        <p
-                          id="err-name"
-                          role="alert"
-                          style={{
-                            color: "var(--ink)",
-                            fontSize: "var(--step-small)",
-                            marginTop: "4px",
-                          }}
-                        >
-                          {errors.name}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label htmlFor="book-phone" className="sr-only">
-                        {booking.fields.phone}
-                      </label>
-                      <input
-                        ref={phoneRef}
-                        id="book-phone"
-                        type="tel"
-                        placeholder={booking.fields.phone}
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        aria-invalid={!!errors.phone}
-                        aria-describedby={
-                          errors.phone ? "err-phone" : undefined
-                        }
-                        style={{
-                          width: "100%",
-                          height: "54px",
-                          padding: "0 16px",
-                          fontSize: "16px",
-                          background: fieldBg,
-                          color: "var(--ink)",
-                          border: "none",
-                          borderRadius: "var(--leaf-s) 0",
-                        }}
-                      />
-                      {errors.phone && (
-                        <p
-                          id="err-phone"
-                          role="alert"
-                          style={{
-                            color: "var(--ink)",
-                            fontSize: "var(--step-small)",
-                            marginTop: "4px",
-                          }}
-                        >
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Service */}
-                    <div>
-                      <label htmlFor="book-service" className="sr-only">
-                        {booking.fields.service}
-                      </label>
-                      <select
-                        ref={serviceRef}
-                        id="book-service"
-                        value={serviceId}
-                        onChange={(e) => setServiceId(e.target.value)}
-                        aria-invalid={!!errors.serviceId}
-                        aria-describedby={
-                          errors.serviceId ? "err-service" : undefined
-                        }
-                        style={{
-                          width: "100%",
-                          height: "54px",
-                          padding: "0 16px",
-                          fontSize: "16px",
-                          background: fieldBg,
-                          color: serviceId ? "var(--ink)" : "var(--muted)",
-                          border: "none",
-                          borderRadius: "var(--leaf-s) 0",
-                          appearance: "none",
-                        }}
-                      >
-                        <option value="" disabled>
-                          {booking.fields.service}
-                        </option>
-                        {prices.groups.map((group) => (
-                          <optgroup key={group.id} label={group.name}>
-                            {group.services.map((s) => (
-                              <option key={s.id} value={s.id}>
-                                {s.name}
-                              </option>
-                            ))}
-                          </optgroup>
-                        ))}
-                      </select>
-                      {errors.serviceId && (
-                        <p
-                          id="err-service"
-                          role="alert"
-                          style={{
-                            color: "var(--ink)",
-                            fontSize: "var(--step-small)",
-                            marginTop: "4px",
-                          }}
-                        >
-                          {errors.serviceId}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Day */}
-                    <div>
-                      <label htmlFor="book-day" className="sr-only">
-                        {booking.fields.day}
-                      </label>
-                      <input
-                        ref={dayRef}
-                        id="book-day"
-                        type="date"
-                        value={day}
-                        onChange={(e) => setDay(e.target.value)}
-                        aria-invalid={!!errors.day}
-                        aria-describedby={errors.day ? "err-day" : undefined}
-                        placeholder={booking.fields.day}
-                        style={{
-                          width: "100%",
-                          height: "54px",
-                          padding: "0 16px",
-                          fontSize: "16px",
-                          background: fieldBg,
-                          color: day ? "var(--ink)" : "var(--muted)",
-                          border: "none",
-                          borderRadius: "var(--leaf-s) 0",
-                        }}
-                      />
-                      {errors.day && (
-                        <p
-                          id="err-day"
-                          role="alert"
-                          style={{
-                            color: "var(--ink)",
-                            fontSize: "var(--step-small)",
-                            marginTop: "4px",
-                          }}
-                        >
-                          {errors.day}
-                        </p>
-                      )}
-                    </div>
+                {submitted ? (
+                  <div className="booking-success-enter">
+                    <h3
+                      ref={successRef}
+                      tabIndex={-1}
+                      className="display-head"
+                      style={{
+                        fontSize: "var(--step-head)",
+                      }}
+                    >
+                      {booking.success.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: "var(--step-body)",
+                        marginTop: "16px",
+                        maxWidth: "50ch",
+                      }}
+                    >
+                      {booking.success.text}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="btn-leaf"
+                      style={{
+                        background: "var(--ink)",
+                        color: "var(--bg)",
+                        marginTop: "24px",
+                      }}
+                    >
+                      {booking.success.again}
+                    </button>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} noValidate>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "12px",
+                      }}
+                    >
+                      {/* Name */}
+                      <div>
+                        <label htmlFor="book-name" className="sr-only">
+                          {booking.fields.name}
+                        </label>
+                        <input
+                          ref={nameRef}
+                          id="book-name"
+                          type="text"
+                          placeholder={booking.fields.name}
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          aria-invalid={!!errors.name}
+                          aria-describedby={errors.name ? "err-name" : undefined}
+                          style={{
+                            width: "100%",
+                            height: "54px",
+                            padding: "0 16px",
+                            fontSize: "16px",
+                            background: fieldBg,
+                            color: "var(--ink)",
+                            border: "none",
+                            borderRadius: "var(--leaf-s) 0",
+                          }}
+                        />
+                        {errors.name && (
+                          <p
+                            id="err-name"
+                            role="alert"
+                            style={{
+                              color: "var(--ink)",
+                              fontSize: "var(--step-small)",
+                              marginTop: "4px",
+                            }}
+                          >
+                            {errors.name}
+                          </p>
+                        )}
+                      </div>
 
-                  {/* Submit */}
-                  <button
-                    type="submit"
-                    style={{
-                      width: "100%",
-                      height: "56px",
-                      marginTop: "12px",
-                      background: "var(--ink)",
-                      color: "var(--bg)",
-                      fontSize: "var(--step-body)",
-                      fontWeight: 500,
-                      border: "none",
-                      borderRadius: "var(--leaf-s) 0",
-                      cursor: "pointer",
-                      transition:
-                        "transform 200ms var(--ease-out)",
-                    }}
-                  >
-                    {booking.submit}
-                  </button>
-                </form>
-              )}
+                      {/* Phone */}
+                      <div>
+                        <label htmlFor="book-phone" className="sr-only">
+                          {booking.fields.phone}
+                        </label>
+                        <input
+                          ref={phoneRef}
+                          id="book-phone"
+                          type="tel"
+                          placeholder={booking.fields.phone}
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={
+                            errors.phone ? "err-phone" : undefined
+                          }
+                          style={{
+                            width: "100%",
+                            height: "54px",
+                            padding: "0 16px",
+                            fontSize: "16px",
+                            background: fieldBg,
+                            color: "var(--ink)",
+                            border: "none",
+                            borderRadius: "var(--leaf-s) 0",
+                          }}
+                        />
+                        {errors.phone && (
+                          <p
+                            id="err-phone"
+                            role="alert"
+                            style={{
+                              color: "var(--ink)",
+                              fontSize: "var(--step-small)",
+                              marginTop: "4px",
+                            }}
+                          >
+                            {errors.phone}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Service */}
+                      <div>
+                        <label htmlFor="book-service" className="sr-only">
+                          {booking.fields.service}
+                        </label>
+                        <select
+                          ref={serviceRef}
+                          id="book-service"
+                          value={serviceId}
+                          onChange={(e) => setServiceId(e.target.value)}
+                          aria-invalid={!!errors.serviceId}
+                          aria-describedby={
+                            errors.serviceId ? "err-service" : undefined
+                          }
+                          style={{
+                            width: "100%",
+                            height: "54px",
+                            padding: "0 16px",
+                            fontSize: "16px",
+                            background: fieldBg,
+                            color: serviceId ? "var(--ink)" : "var(--muted)",
+                            border: "none",
+                            borderRadius: "var(--leaf-s) 0",
+                            appearance: "none",
+                          }}
+                        >
+                          <option value="" disabled>
+                            {booking.fields.service}
+                          </option>
+                          {prices.groups.map((group) => (
+                            <optgroup key={group.id} label={group.name}>
+                              {group.services.map((s) => (
+                                <option key={s.id} value={s.id}>
+                                  {s.name}
+                                </option>
+                              ))}
+                            </optgroup>
+                          ))}
+                        </select>
+                        {errors.serviceId && (
+                          <p
+                            id="err-service"
+                            role="alert"
+                            style={{
+                              color: "var(--ink)",
+                              fontSize: "var(--step-small)",
+                              marginTop: "4px",
+                            }}
+                          >
+                            {errors.serviceId}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Day */}
+                      <div>
+                        <label htmlFor="book-day" className="sr-only">
+                          {booking.fields.day}
+                        </label>
+                        <input
+                          ref={dayRef}
+                          id="book-day"
+                          type="date"
+                          value={day}
+                          onChange={(e) => setDay(e.target.value)}
+                          aria-invalid={!!errors.day}
+                          aria-describedby={errors.day ? "err-day" : undefined}
+                          placeholder={booking.fields.day}
+                          style={{
+                            width: "100%",
+                            height: "54px",
+                            padding: "0 16px",
+                            fontSize: "16px",
+                            background: fieldBg,
+                            color: day ? "var(--ink)" : "var(--muted)",
+                            border: "none",
+                            borderRadius: "var(--leaf-s) 0",
+                          }}
+                        />
+                        {errors.day && (
+                          <p
+                            id="err-day"
+                            role="alert"
+                            style={{
+                              color: "var(--ink)",
+                              fontSize: "var(--step-small)",
+                              marginTop: "4px",
+                            }}
+                          >
+                            {errors.day}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Submit */}
+                    <button
+                      type="submit"
+                      data-magnetic
+                      style={{
+                        width: "100%",
+                        height: "56px",
+                        marginTop: "12px",
+                        background: "var(--ink)",
+                        color: "var(--bg)",
+                        fontSize: "var(--step-body)",
+                        fontWeight: 500,
+                        border: "none",
+                        borderRadius: "var(--leaf-s) 0",
+                        cursor: "pointer",
+                        transition:
+                          "transform 200ms var(--ease-out)",
+                      }}
+                    >
+                      {booking.submit}
+                    </button>
+                  </form>
+                )}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Action buttons below card */}
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            justifyContent: "center",
-            marginTop: "32px",
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href={contact.phoneHref}
-            className="btn-leaf"
+          {/* Action buttons below card */}
+          <div
             style={{
-              background: "var(--accent)",
-              color: "var(--accent-ink)",
+              display: "flex",
+              gap: "12px",
+              justifyContent: "center",
+              marginTop: "32px",
+              flexWrap: "wrap",
             }}
           >
-            Call {contact.phoneDisplay}
-          </a>
-          <a
-            href={contact.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-leaf"
-            style={{
-              background: "var(--accent)",
-              color: "var(--accent-ink)",
-            }}
-          >
-            WhatsApp us
-          </a>
-        </div>
+            <a
+              href={contact.phoneHref}
+              className="btn-leaf"
+              data-magnetic
+              style={{
+                background: "var(--accent)",
+                color: "var(--accent-ink)",
+              }}
+            >
+              Call {contact.phoneDisplay}
+            </a>
+            <a
+              href={contact.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-leaf"
+              data-magnetic
+              style={{
+                background: "var(--accent)",
+                color: "var(--accent-ink)",
+              }}
+            >
+              WhatsApp us
+            </a>
+          </div>
+        </Reveal>
       </div>
 
       <style>{`
