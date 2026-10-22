@@ -100,6 +100,7 @@ export default function Samples() {
                     id={`sample-tab-${i}`}
                     role="tab"
                     type="button"
+                    aria-label={item.who}
                     aria-selected={isSelected}
                     aria-controls={`sample-panel-${i}`}
                     tabIndex={isSelected ? 0 : -1}
