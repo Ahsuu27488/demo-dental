@@ -36,3 +36,4 @@
   picture's spare edge, incoming quote stacked above the outgoing one. Checked in headless
   Chrome: header, active link, tilt, magnetic, no tilt on touch, no overflow at 390, reduced
   motion off, no-JS content complete. Taste inspector 0 FAIL.
+- Preview checks (feat/motion-21st): Lighthouse mobile performance 94-99, accessibility 100, best practices 100 (SEO 66 only from Vercel's preview noindex); screenshots in docs/screenshots/motion/.
