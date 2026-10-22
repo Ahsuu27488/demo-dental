@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fernwick Dental — Demo Website
 
-## Getting Started
+**Demo website for a fictional clinic, built by Muhammad Ahsan ([ahsandev.site](https://ahsandev.site)).** No real business, patients, reviews or results are shown.
 
-First, run the development server:
+A polished, mobile-first one-page website for **Fernwick Dental**, a fictional family dental clinic in downtown Portland, Oregon. Built as a portfolio demo with Next.js 16 (App Router, React 19) and Tailwind CSS v4.
+
+## What it is
+
+A single-page marketing site with ten sections: demo banner, header, hero with folder-tab stack, "why us" statement with inline photos, services and pricing, visit walkthrough with leaf-particle SVG, live booking form (client-side only — nothing is sent), hours and map, FAQ accordion, and footer with a decorative fern frond.
+
+All copy, prices, hours and FAQs come from `src/content/clinic.ts`. Photos are Pacific Northwest landscapes stored in `public/img/`.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build and deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm build
+pnpm start
+```
 
-## Learn More
+Deploy to Vercel, Netlify, or any Node.js host that supports Next.js 16.
 
-To learn more about Next.js, take a look at the following resources:
+## Test
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Runs Vitest unit tests for the booking validation library (`src/lib/booking.ts`).
 
-## Deploy on Vercel
+## Tech stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- [React 19](https://react.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/) (CSS-first config)
+- [Jost](https://fonts.google.com/specimen/Jost) typeface via `next/font`
+- [Vitest](https://vitest.dev/) for unit testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Credits
+
+Photos by Paul Jarvis, Buzo Jesús, Liane Metzler, Kim Daniel and Forrest Cavale on [Unsplash](https://unsplash.com/license). Map © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright).

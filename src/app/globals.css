@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        oklch(0.972 0.010 150);
+  --surface:   oklch(0.935 0.018 150);
+  --ink:       oklch(0.255 0.035 160);
+  --muted:     oklch(0.440 0.030 160);
+  --accent:    oklch(0.470 0.120 152);
+  --accent-ink:oklch(0.985 0.008 150);
+  --field-forest:     oklch(0.300 0.050 160);
+  --field-forest-ink: oklch(0.955 0.015 150);
+  --field-moss:       oklch(0.780 0.075 132);
+  --field-moss-ink:   oklch(0.255 0.035 160);
+  --field-rain:       oklch(0.640 0.035 230);
+  --field-rain-ink:   oklch(0.200 0.030 230);
+  --field-lichen:     oklch(0.900 0.055 110);
+  --field-lichen-ink: oklch(0.255 0.035 160);
+  --leaf-xl: 120px;
+  --leaf-l: 48px;
+  --leaf-m: 24px;
+  --leaf-s: 14px;
+  --step-small:   clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body:    clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead:    clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head:    clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --step-display: clamp(3.4rem, 8vw, 8.5rem);
+  --margin:       clamp(16px, 4vw, 56px);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-field-forest: var(--field-forest);
+  --color-field-forest-ink: var(--field-forest-ink);
+  --color-field-moss: var(--field-moss);
+  --color-field-moss-ink: var(--field-moss-ink);
+  --color-field-rain: var(--field-rain);
+  --color-field-rain-ink: var(--field-rain-ink);
+  --color-field-lichen: var(--field-lichen);
+  --color-field-lichen-ink: var(--field-lichen-ink);
+  --font-sans: var(--font-jost);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-jost), sans-serif;
+  font-size: var(--step-body);
+  line-height: 1.5;
+}
+
+/* ---------- Display headings ---------- */
+.display-head {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+/* ---------- Focus visible ---------- */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Leaf corner utility ---------- */
+.leaf {
+  border-radius: var(--leaf-m) 0;
+}
+.leaf-l {
+  border-radius: var(--leaf-l) 0;
+}
+.leaf-xl {
+  border-radius: var(--leaf-xl) 0;
+}
+
+/* ---------- Leaf-shaped button ---------- */
+.btn-leaf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: var(--step-body);
+  font-weight: 500;
+  border-radius: var(--leaf-m) 0;
+  transition: background 200ms var(--ease-out), transform 200ms var(--ease-out);
+  cursor: pointer;
+  min-height: 48px;
+}
+.btn-leaf:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Section spacing ---------- */
+.section-gap {
+  padding-top: clamp(80px, 10vw, 200px);
+  padding-bottom: clamp(80px, 10vw, 200px);
+}
+
+/* ---------- Reveal animation (JS-driven) ---------- */
+html.js .reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+html.js .reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+}
+
+/* Stagger delays */
+html.js .reveal-delay-1 { transition-delay: 70ms; }
+html.js .reveal-delay-2 { transition-delay: 140ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal-item {
+    opacity: 1;
+    transform: none;
+  }
+  html.js .reveal-item.revealed {
+    transition: none;
+  }
+}
+
+/* ---------- Hover feedback ---------- */
+@media (hover: hover) {
+  .btn-leaf:hover {
+    filter: brightness(1.1);
+  }
+  a:hover {
+    filter: brightness(1.1);
+  }
+}
+
+/* ---------- Content container ---------- */
+.page-container {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+/* ---------- Leaf bullet ---------- */
+.leaf-bullet::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px 0;
+  flex-shrink: 0;
+  margin-right: 10px;
+  margin-top: 0.35em;
 }

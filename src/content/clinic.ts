@@ -229,7 +229,6 @@ export const photos = {
   "fog-bridge": { src: "/img/fog-bridge.jpg", alt: "A long bridge disappearing into grey fog", credit: "Liane Metzler" },
   "tall-trunks": { src: "/img/tall-trunks.jpg", alt: "Looking up tall tree trunks towards the forest canopy", credit: "Kim Daniel" },
   "cloud-hills": { src: "/img/cloud-hills.jpg", alt: "Low cloud drifting over dark green forested hills", credit: "Forrest Cavale" },
-  "city-park": { src: "/img/city-park.jpg", alt: "Aerial view of a green city park between towers", credit: "freddie marriage" },
 } as const;
 
 export type PhotoId = keyof typeof photos;
