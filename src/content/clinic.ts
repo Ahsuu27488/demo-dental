@@ -6,7 +6,7 @@
 export const site = {
   name: "Fernwick Dental",
   city: "Portland, Oregon",
-  url: "https://demo-dental.vercel.app",
+  url: "https://demo-dental-teal-two.vercel.app",
   title: "Fernwick Dental, Portland | Demo website",
   description:
     "Demo website for Fernwick Dental, a fictional family dental clinic in downtown Portland, Oregon. Built by Muhammad Ahsan.",

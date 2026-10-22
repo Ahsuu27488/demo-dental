@@ -2,6 +2,8 @@
 
 **Demo website for a fictional clinic, built by Muhammad Ahsan ([ahsandev.site](https://ahsandev.site)).** No real business, patients, reviews or results are shown.
 
+Live: https://demo-dental-teal-two.vercel.app
+
 A polished, mobile-first one-page website for **Fernwick Dental**, a fictional family dental clinic in downtown Portland, Oregon. Built as a portfolio demo with Next.js 16 (App Router, React 19) and Tailwind CSS v4.
 
 ## What it is
