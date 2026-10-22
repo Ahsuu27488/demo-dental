@@ -1,7 +1,9 @@
 // All copy and sample data for the Fernwick Dental demo.
 // Fernwick Dental is FICTIONAL. Every price, hour and number here is sample
 // content for a portfolio demo. Phone numbers use the reserved 555-01xx range.
-// Never add testimonials, ratings, reviews, awards, insurer logos or patient photos.
+// Never add real-looking testimonials, ratings, review counts, awards, insurer logos
+// or patient photos. The only quotes are the labelled `samples` below (owner-approved
+// 2026-10-22 on condition that they are visibly marked as fictional).
 
 export const site = {
   name: "Fernwick Dental",
@@ -173,6 +175,33 @@ export const hours = {
     { day: "Sunday", time: "Closed" },
   ],
   emergency: "Toothache out of hours? Call and leave a message: we return emergency calls from 7:30 am.",
+};
+
+// SAMPLE reviews for the demo layout. The clinic and these patients are fictional,
+// and the page says so next to the quotes. No star ratings, counts or real names.
+export const samples = {
+  heading: "What a visit feels like",
+  note: "Sample reviews written for this demo. Fernwick Dental and these patients are fictional.",
+  items: [
+    {
+      id: "nerves",
+      quote:
+        "I told them I was nervous before I sat down. They showed me every step on the screen and stopped each time I lifted my hand.",
+      who: "Sample patient, check-up",
+    },
+    {
+      id: "price",
+      quote:
+        "The plan listed what had to happen now, what could wait, and the price of each. No surprises at the front desk.",
+      who: "Sample patient, filling",
+    },
+    {
+      id: "kids",
+      quote:
+        "My son's first visit was twenty minutes of counting teeth and a sticker. He asked when he could come back.",
+      who: "Sample parent, children's check-up",
+    },
+  ],
 };
 
 export const faq = {
