@@ -13,3 +13,4 @@
   at 1440/768/390.
 - Live on Vercel: https://demo-dental-teal-two.vercel.app (site.url updated for canonical/OG/sitemap).
 - Hero paints without an entrance animation (it is the LCP); Lighthouse mobile was 88 performance.
+- Screenshots (live site) in docs/screenshots/. Lighthouse mobile (live): performance 95-96, accessibility/best practices/SEO 100.
